@@ -1,0 +1,26 @@
+<h1>Your Borrowed Books</h1>
+
+<% if @borrowed_books.any? %>
+  <table border="1">
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>ISBN</th>
+      <th>Due Date</th>
+      <th>Actions</th>
+    </tr>
+    <% @borrowed_books.each do |borrowing| %>
+      <tr>
+        <td><%= borrowing.book.title %></td>
+        <td><%= borrowing.book.author %></td>
+        <td><%= borrowing.book.isbn %></td>
+        <td><%= borrowing.due_date.strftime("%Y-%m-%d") %></td>
+        <td>
+          <%= button_to "Return", return_book_path(borrowing.book), method: :post, class: "btn btn-warning" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p>You have not borrowed any books.</p>
+<% end %>

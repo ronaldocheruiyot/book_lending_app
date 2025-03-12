@@ -1,0 +1,30 @@
+<h1>Borrowing History</h1>
+
+<% if @borrowings.any? %>
+  <table border="1">
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>ISBN</th>
+      <th>Due Date</th>
+      <th>Status</th>
+    </tr>
+    <% @borrowings.each do |borrowing| %>
+      <tr>
+        <td><%= borrowing.book.title %></td>
+        <td><%= borrowing.book.author %></td>
+        <td><%= borrowing.book.isbn %></td>
+        <td><%= borrowing.due_date.strftime("%Y-%m-%d") %></td>
+        <td>
+          <% if borrowing.returned_at.nil? %>
+            <span style="color: red;">Not Returned</span>
+          <% else %>
+            Returned on <%= borrowing.returned_at.strftime("%Y-%m-%d") %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p>No borrowing records found.</p>
+<% end %>

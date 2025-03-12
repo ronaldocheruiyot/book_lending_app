@@ -1,0 +1,35 @@
+<h1>Welcome to the Book Lending App</h1>
+
+<%= link_to "My Borrowed Books", user_profile_path, class: "btn btn-success" %>
+
+<% if @books.any? %>
+  <table border="1">
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>ISBN</th>
+      <th>Availability</th>
+      <th>Actions</th>
+    </tr>
+    <% @books.each do |book| %>
+      <tr>
+        <td><%= book.title %></td>
+        <td><%= book.author %></td>
+        <td><%= book.isbn %></td>
+        <td>
+          <%= book.available? ? "Available" : "Borrowed" %>
+        </td>
+        <td>
+          <%= link_to "View", book_path(book), class: "btn btn-info" %>
+          <% if book.available? %>
+            <%= button_to "Borrow", borrow_book_path(book), method: :post, class: "btn btn-primary" %>
+          <% else %>
+            <span>Not Available</span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p>No books available.</p>
+<% end %>
